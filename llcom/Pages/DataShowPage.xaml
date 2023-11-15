@@ -27,7 +27,6 @@
         <FlowDocumentScrollViewer
             Name="uartDataFlowDocument"
             MinZoom="50"
-            MouseLeave="uartDataFlowDocument_MouseLeave"
             VerticalScrollBarVisibility="Visible">
             <!--  更改段落间距  -->
             <FlowDocumentScrollViewer.Resources>

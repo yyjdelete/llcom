@@ -1078,7 +1078,11 @@ namespace llcom
                 var logs = logsb.ToString();
                 DoInvoke(()=>
                 {
-                    luaLogTextBox.IsEnabled = false;//确保文字不再被选中，防止wpf卡死
+                    //确保文字不再被选中，防止wpf卡死
+                    if (luaLogTextBox.SelectionLength != 0)
+                    {
+                        luaLogTextBox.Select(0, 0);
+                    }
                     if (luaLogCount >= 1000)
                     {
                         luaLogTextBox.Clear();
@@ -1088,18 +1092,10 @@ namespace llcom
                     }
                     luaLogTextBox.AppendText(logs);
                     luaLogTextBox.ScrollToEnd();
-                    if (!luaLogTextBox.IsMouseOver)
-                        luaLogTextBox.IsEnabled = true;
                 });
                 //正常就延时10ms，防止卡住ui线程
                 Thread.Sleep(10);
             }
-        }
-
-
-        private void luaLogTextBox_MouseLeave(object sender, MouseEventArgs e)
-        {
-            luaLogTextBox.IsEnabled = true;
         }
 
         private void StopLuaButton_Click(object sender, RoutedEventArgs e)
