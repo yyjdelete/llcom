@@ -129,11 +129,11 @@ namespace llcom
                     var foldingManager = FoldingManager.Install(textEditor.TextArea);
                     var foldingStrategy = new Model.LuaFolding();
 
-                    Task.Run(() =>
+                    Task.Run(async() =>
                     {
                         while (true)
                         {
-                            Task.Delay(1000).Wait();
+                            await Task.Delay(1000);
                             this.Dispatcher.Invoke(new Action(delegate
                             {
                                 try
@@ -332,7 +332,7 @@ namespace llcom
             refreshLock = true;
             serialPortsListComboBox.Items.Clear();
             List<string> strs = new List<string>();
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 while(true)
                 {
@@ -351,7 +351,7 @@ namespace llcom
                     }
                     catch
                     {
-                        Task.Delay(500).Wait();
+                        await Task.Delay(500);
                     }
                     //MessageBox.Show("fail了");
                 }
@@ -465,9 +465,12 @@ namespace llcom
                 if (UsbPluginDeley == 0)
                 {
                     ++UsbPluginDeley;   // Task启动需要准备时间,这里提前对公共变量加一
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
-                        do Task.Delay(100).Wait();
+                        do
+                        {
+                            await Task.Delay(100);
+                        }
                         while (++UsbPluginDeley < 10);
                         UsbPluginDeley = 0;
                         Dispatcher.Invoke(() =>
@@ -1037,8 +1040,6 @@ namespace llcom
                     {
                         luaLogsBuff.Clear();
                         luaLogsBuff.Add("too many logs!");
-                        //延时0.5秒，防止卡住ui线程
-                        Thread.Sleep(500);
                     }
                     else
                         luaLogsBuff.Add(sender as string);

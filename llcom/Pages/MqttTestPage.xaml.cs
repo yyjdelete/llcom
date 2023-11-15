@@ -310,7 +310,7 @@ namespace llcom.Pages
                     .WithPayload(payload)
                     .WithQualityOfServiceLevel(qos)
                     .Build();
-                mqttClient.PublishAsync(message, CancellationToken.None).Wait();
+                Task.Run(() => mqttClient.PublishAsync(message, CancellationToken.None)).Wait();
                 Tools.Logger.ShowDataRaw(new Tools.DataShowRaw
                 {
                     title = $"MQTT ← {message.Topic}({(int)message.QualityOfServiceLevel})",

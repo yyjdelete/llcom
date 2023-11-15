@@ -108,8 +108,6 @@ namespace llcom.Pages
                     {
                         title = packsTooMuch
                     });
-                    //延时0.5秒，防止卡住ui线程
-                    Thread.Sleep(500);
                 }
                 else
                     DataQueue.Add(e);

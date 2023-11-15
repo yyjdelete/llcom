@@ -179,10 +179,10 @@ namespace llcom.LuaEnv
             //文件不存在
             if (!File.Exists(Tools.Global.ProfilePath + file))
                 return;
-            Task.Run(() =>
+            Task.Run(async() =>
             {
                 while(!canRun)
-                    Task.Delay(100).Wait();
+                    await Task.Delay(100);
                 try
                 {
                     lua = new XLua.LuaEnv();
